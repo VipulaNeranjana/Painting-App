@@ -178,21 +178,23 @@ public class MainFormController {
     }
 
     public void lblDragOnMouseEnterd(MouseEvent mouseEvent) {
-        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(500),lblDrag);
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100),lblDrag);
         scaleTransition.setFromX(1);
         scaleTransition.setFromY(1);
         scaleTransition.setToX(1.05);
         scaleTransition.setToY(1.1);
         scaleTransition.play();
+        lblDrag.setEffect(new InnerShadow(6,Color.BLACK));
     }
 
     public void lblDragOnMouseExited(MouseEvent mouseEvent) {
-        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(500),lblDrag);
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100),lblDrag);
         scaleTransition.setFromX(1.05);
         scaleTransition.setFromY(1.1);
         scaleTransition.setToX(1);
         scaleTransition.setToY(1);
         scaleTransition.play();
+        lblDrag.setEffect(null);
     }
 
     public void lblDragOnReleased(MouseEvent mouseEvent) {
@@ -303,5 +305,150 @@ public class MainFormController {
 
     public void rootOnMouseRelesed(MouseEvent mouseEvent) {
 
+    }
+
+    public void btnRectOnMouseEnterd(MouseEvent mouseEvent) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), btnRect);
+        scaleTransition.setFromX(1);
+        scaleTransition.setFromY(1);
+        scaleTransition.setToX(1.05);
+        scaleTransition.setToY(1.1);
+        scaleTransition.play();
+
+    }
+
+    public void btnRectOnMouseExited(MouseEvent mouseEvent) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), btnRect);
+        scaleTransition.setFromX(1.05);
+        scaleTransition.setFromY(1.1);
+        scaleTransition.setToX(1);
+        scaleTransition.setToY(1);
+        scaleTransition.play();
+    }
+
+    public void btnRoundOnMouseEnterd(MouseEvent mouseEvent) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), btnRound);
+        scaleTransition.setFromX(1);
+        scaleTransition.setFromY(1);
+        scaleTransition.setToX(1.05);
+        scaleTransition.setToY(1.1);
+        scaleTransition.play();
+    }
+
+    public void btnRoundOnMouseExited(MouseEvent mouseEvent) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), btnRound);
+        scaleTransition.setFromX(1.05);
+        scaleTransition.setFromY(1.1);
+        scaleTransition.setToX(1);
+        scaleTransition.setToY(1);
+        scaleTransition.play();
+    }
+
+    public void btnOvelOnMouseEnterd(MouseEvent mouseEvent) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), btnOvel);
+        scaleTransition.setFromX(1);
+        scaleTransition.setFromY(1);
+        scaleTransition.setToX(1.05);
+        scaleTransition.setToY(1.1);
+        scaleTransition.play();
+    }
+
+    public void btnOvelOnMouseExited(MouseEvent mouseEvent) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), btnOvel);
+        scaleTransition.setFromX(1.05);
+        scaleTransition.setFromY(1.1);
+        scaleTransition.setToX(1);
+        scaleTransition.setToY(1);
+        scaleTransition.play();
+    }
+
+    public void btnPencilOnMouseEnterd(MouseEvent mouseEvent) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), btnPencil);
+        scaleTransition.setFromX(1);
+        scaleTransition.setFromY(1);
+        scaleTransition.setToX(1.05);
+        scaleTransition.setToY(1.1);
+        scaleTransition.play();
+    }
+
+    public void btnPencilOnMouseExited(MouseEvent mouseEvent) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), btnPencil);
+        scaleTransition.setFromX(1.05);
+        scaleTransition.setFromY(1.1);
+        scaleTransition.setToX(1);
+        scaleTransition.setToY(1);
+        scaleTransition.play();
+    }
+
+    public void btnEresorOnMouseEnterd(MouseEvent mouseEvent) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), btnEreser);
+        scaleTransition.setFromX(1);
+        scaleTransition.setFromY(1);
+        scaleTransition.setToX(1.05);
+        scaleTransition.setToY(1.1);
+        scaleTransition.play();
+    }
+
+    public void btnEresorOnMouseExited(MouseEvent mouseEvent) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), btnEreser);
+        scaleTransition.setFromX(1.05);
+        scaleTransition.setFromY(1.1);
+        scaleTransition.setToX(1);
+        scaleTransition.setToY(1);
+        scaleTransition.play();
+    }
+
+    public void btnTextOnMouseEnterd(MouseEvent mouseEvent) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), btnText);
+        scaleTransition.setFromX(1);
+        scaleTransition.setFromY(1);
+        scaleTransition.setToX(1.05);
+        scaleTransition.setToY(1.1);
+        scaleTransition.play();
+    }
+
+    public void btnTextOnMouseExited(MouseEvent mouseEvent) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), btnText);
+        scaleTransition.setFromX(1.05);
+        scaleTransition.setFromY(1.1);
+        scaleTransition.setToX(1);
+        scaleTransition.setToY(1);
+        scaleTransition.play();
+    }
+
+    public void btnStrockOnMouseEnterd(MouseEvent mouseEvent) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), clrStroke);
+        scaleTransition.setFromX(1);
+        scaleTransition.setFromY(1);
+        scaleTransition.setToX(1.05);
+        scaleTransition.setToY(1.1);
+        scaleTransition.play();
+    }
+
+    public void btnStrockOnMouseExited(MouseEvent mouseEvent) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), clrStroke);
+        scaleTransition.setFromX(1.05);
+        scaleTransition.setFromY(1.1);
+        scaleTransition.setToX(1);
+        scaleTransition.setToY(1);
+        scaleTransition.play();
+    }
+
+    public void btnFillOnMouseEnterd(MouseEvent mouseEvent) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), clrFill);
+        scaleTransition.setFromX(1);
+        scaleTransition.setFromY(1);
+        scaleTransition.setToX(1.05);
+        scaleTransition.setToY(1.1);
+        scaleTransition.play();
+    }
+
+    public void btnFillOnMouseExited(MouseEvent mouseEvent) {
+        ScaleTransition scaleTransition = new ScaleTransition(Duration.millis(100), clrFill);
+        scaleTransition.setFromX(1.05);
+        scaleTransition.setFromY(1.1);
+        scaleTransition.setToX(1);
+        scaleTransition.setToY(1);
+        scaleTransition.play();
     }
 }
