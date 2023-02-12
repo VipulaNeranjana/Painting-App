@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-
-<AnchorPane prefHeight="681.0" prefWidth="809.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.dep10.drawing.controller.MainFormController">
+<AnchorPane fx:id="root" prefHeight="681.0" prefWidth="809.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.dep10.drawing.controller.MainFormController">
    <children>
       <Canvas fx:id="cnvMain" height="713.0" onMouseClicked="#cnvOnMouseClicked" onMouseDragged="#cnvOnMouseDragged" onMousePressed="#cnvOnMousePressed" onMouseReleased="#cnvOnMouseReleased" width="877.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <VBox fx:id="vBox" layoutX="21.0" layoutY="69.0" prefHeight="581.0" prefWidth="150.0">

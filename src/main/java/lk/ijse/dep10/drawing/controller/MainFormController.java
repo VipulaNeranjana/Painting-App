@@ -3,22 +3,30 @@ package lk.ijse.dep10.drawing.controller;
 import javafx.animation.ScaleTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
+import javafx.scene.ImageCursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.effect.InnerShadow;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
+import java.io.IOException;
+
 public class MainFormController {
 
     public VBox vBox;
     public Canvas cnvMain;
+    public AnchorPane root;
     @FXML
     private Button btnEreser;
 
@@ -65,6 +73,8 @@ public class MainFormController {
     boolean strokeColor;
     boolean fillColor;
 
+    Image image;
+
     public void initialize(){
         gp = cnvMain.getGraphicsContext2D();
     }
@@ -77,6 +87,10 @@ public class MainFormController {
         pencil = false;
         eraser = true;
         text = false;
+
+        image = new Image(this.getClass().getResource("/MainIcons/eraser (1).png").toString(),20,20,true,true);
+        cnvMain.setCursor(new ImageCursor(image));
+
     }
 
     @FXML
@@ -187,7 +201,7 @@ public class MainFormController {
 
     }
 
-    public void cnvOnMouseReleased(MouseEvent mouseEvent) {
+    public void cnvOnMouseReleased(MouseEvent mouseEvent) throws IOException {
         stopPointX = mouseEvent.getX();
         stopPointY = mouseEvent.getY();
 
@@ -252,6 +266,17 @@ public class MainFormController {
             else if(stopPointX > startPointX && stopPointY < startPointY) gp.strokeOval(startPointX,stopPointY,stopPointX-startPointX,startPointY-stopPointY);
             else if(stopPointX < startPointX && stopPointY > startPointY) gp.strokeOval(stopPointX,startPointY,startPointX-stopPointX,stopPointY -startPointY);
             else gp.strokeOval(startPointX,startPointY,stopPointX-startPointX,stopPointY-startPointY);
+        }
+        if(pencil){
+            gp.strokeLine(startPointX,startPointY,stopPointX,stopPointY);
+            startPointX = stopPointX;
+            startPointY = stopPointY;
+
+        }
+        if(eraser){
+            gp.clearRect(mouseEvent.getX(),mouseEvent.getY(),image.getWidth(), image.getHeight());
+
+            System.out.println(cnvMain.getLayoutX()+" "+cnvMain.getLayoutY()+ " "+image.getWidth() +" " +  image.getHeight());
         }
 
 
