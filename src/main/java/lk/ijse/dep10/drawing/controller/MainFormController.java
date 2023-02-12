@@ -51,6 +51,11 @@ public class MainFormController {
     double yOfLbl;
 
     boolean rect = false;
+    boolean round = false;
+    boolean oval = false;
+    boolean pencil = false;
+    boolean eraser = false;
+    boolean text = false;
 
     double startPointX;
     double startPointY;
@@ -66,27 +71,52 @@ public class MainFormController {
 
     @FXML
     void btnEreserOnAction(ActionEvent event) {
-
+        round = false;
+        rect = false;
+        oval = false;
+        pencil = false;
+        eraser = true;
+        text = false;
     }
 
     @FXML
     void btnOvelOnAction(ActionEvent event) {
-
+        round = false;
+        rect = false;
+        oval = true;
+        pencil = false;
+        eraser = false;
+        text = false;
     }
 
     @FXML
     void btnPencilOnAction(ActionEvent event) {
-
+        round = false;
+        rect = false;
+        oval = false;
+        pencil = true;
+        eraser = false;
+        text = false;
     }
 
     @FXML
     void btnRectOnAction(ActionEvent event) {
         rect = true;
+        round = false;
+        oval = false;
+        pencil = false;
+        eraser = false;
+        text = false;
     }
 
     @FXML
     void btnRoundOnAction(ActionEvent event) {
-
+        round = true;
+        rect = false;
+        oval = false;
+        pencil = false;
+        eraser = false;
+        text = false;
     }
 
     @FXML
@@ -168,12 +198,27 @@ public class MainFormController {
             else if(stopPointX < startPointX && stopPointY > startPointY) gp.fillRect(stopPointX,startPointY,startPointX-stopPointX,stopPointY -startPointY);
             else gp.fillRect(startPointX,startPointY,stopPointX-startPointX,stopPointY-startPointY);
         }
+
+        if(round && fillColor){
+            double radius = Math.min(Math.abs(stopPointX - startPointX), Math.abs(stopPointY - startPointY));
+
+            if(stopPointX < startPointX && stopPointY < startPointY) gp.fillOval(startPointX-radius,startPointY-radius,radius,radius);
+            else if(stopPointX > startPointX && stopPointY < startPointY) gp.fillOval(startPointX,startPointY-radius,radius,radius);
+            else if(stopPointX < startPointX && stopPointY > startPointY) gp.fillOval(startPointX-radius,startPointY,radius,radius);
+            else gp.fillOval(startPointX,startPointY,radius,radius);
+        }
+        if(oval && fillColor){
+            if(stopPointX < startPointX && stopPointY < startPointY) gp.fillOval(stopPointX,stopPointY,startPointX-stopPointX,startPointY-stopPointY);
+            else if(stopPointX > startPointX && stopPointY < startPointY) gp.fillOval(startPointX,stopPointY,stopPointX-startPointX,startPointY-stopPointY);
+            else if(stopPointX < startPointX && stopPointY > startPointY) gp.fillOval(stopPointX,startPointY,startPointX-stopPointX,stopPointY -startPointY);
+            else gp.fillOval(startPointX,startPointY,stopPointX-startPointX,stopPointY-startPointY);
+        }
     }
 
     public void cnvOnMouseDragged(MouseEvent mouseEvent) {
+        stopPointX = mouseEvent.getX();
+        stopPointY = mouseEvent.getY();
         if(rect){
-            stopPointX = mouseEvent.getX();
-            stopPointY = mouseEvent.getY();
 
             if(stopPointX < startPointX && stopPointY < startPointY) {
                 gp.clearRect(0,0,cnvMain.getWidth(), cnvMain.getHeight());
@@ -193,6 +238,23 @@ public class MainFormController {
             }
 
         }
+        if(round ){
+            double radius = Math.min(Math.abs(stopPointX - startPointX), Math.abs(stopPointY - startPointY));
+            gp.clearRect(0,0,cnvMain.getWidth(), cnvMain.getHeight());
+            if(stopPointX < startPointX && stopPointY < startPointY) gp.strokeOval(startPointX-radius,startPointY-radius,radius,radius);
+            else if(stopPointX > startPointX && stopPointY < startPointY) gp.strokeOval(startPointX,startPointY-radius,radius,radius);
+            else if(stopPointX < startPointX && stopPointY > startPointY) gp.strokeOval(startPointX-radius,startPointY,radius,radius);
+            else gp.strokeOval(startPointX,startPointY,radius,radius);
+        }
+        if(oval){
+            gp.clearRect(0,0,cnvMain.getWidth(), cnvMain.getHeight());
+            if(stopPointX < startPointX && stopPointY < startPointY) gp.strokeOval(stopPointX,stopPointY,startPointX-stopPointX,startPointY-stopPointY);
+            else if(stopPointX > startPointX && stopPointY < startPointY) gp.strokeOval(startPointX,stopPointY,stopPointX-startPointX,startPointY-stopPointY);
+            else if(stopPointX < startPointX && stopPointY > startPointY) gp.strokeOval(stopPointX,startPointY,startPointX-stopPointX,stopPointY -startPointY);
+            else gp.strokeOval(startPointX,startPointY,stopPointX-startPointX,stopPointY-startPointY);
+        }
+
+
     }
 
     public void cnvOnMousePressed(MouseEvent mouseEvent) {
