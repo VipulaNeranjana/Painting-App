@@ -81,6 +81,11 @@ public class MainFormController {
 
     @FXML
     void btnEreserOnAction(ActionEvent event) {
+        if(eraser) {
+            eraser = false;
+            cnvMain.setCursor(Cursor.DEFAULT);
+            return;
+        }
         round = false;
         rect = false;
         oval = false;
@@ -135,7 +140,7 @@ public class MainFormController {
 
     @FXML
     void btnTextOnAction(ActionEvent event) {
-
+        gp.fillText("hi its me", 20,20);
     }
 
     @FXML
@@ -285,6 +290,18 @@ public class MainFormController {
     public void cnvOnMousePressed(MouseEvent mouseEvent) {
         startPointX = mouseEvent.getX();
         startPointY = mouseEvent.getY();
+
+    }
+
+    public void rootOnMouseDragged(MouseEvent mouseEvent) {
+        cnvMain.setWidth(root.getWidth());
+        cnvMain.setHeight(root.getHeight());
+    }
+
+    public void rootOnMousePressed(MouseEvent mouseEvent) {
+    }
+
+    public void rootOnMouseRelesed(MouseEvent mouseEvent) {
 
     }
 }
