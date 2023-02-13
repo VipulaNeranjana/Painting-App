@@ -1,8 +1,12 @@
 package lk.ijse.dep10.drawing.controller;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
 import javafx.animation.ScaleTransition;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+
 import javafx.scene.Cursor;
 import javafx.scene.ImageCursor;
 import javafx.scene.canvas.Canvas;
@@ -10,9 +14,12 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.InnerShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -21,12 +28,15 @@ import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class MainFormController {
 
     public VBox vBox;
     public Canvas cnvMain;
     public AnchorPane root;
+    public Label lblText;
+    public Rectangle rectBlink;
     @FXML
     private Button btnEreser;
 
@@ -73,17 +83,39 @@ public class MainFormController {
     boolean strokeColor;
     boolean fillColor;
 
+    String textFromTyping = "";
+
     Image image;
+
+    Timeline timeline;
+
 
     public void initialize(){
         gp = cnvMain.getGraphicsContext2D();
+        lblText.setVisible(false);
+        rectBlink.setVisible(false);
+
+        KeyFrame key1 = new KeyFrame(Duration.seconds(0), event -> {
+            rectBlink.setVisible(true);
+        });
+        KeyFrame key2 = new KeyFrame(Duration.seconds(0.75), event -> {
+            rectBlink.setVisible(false);
+        });
+        KeyFrame key3 = new KeyFrame(Duration.seconds(1.5), event -> {
+            rectBlink.setVisible(true);
+        });
+        timeline = new Timeline(key1, key2, key3);
+        timeline.setCycleCount(Animation.INDEFINITE);
+
     }
 
     @FXML
     void btnEreserOnAction(ActionEvent event) {
+        System.out.println(eraser);
         if(eraser) {
-            eraser = false;
             cnvMain.setCursor(Cursor.DEFAULT);
+            System.out.println(eraser);
+            eraser = false;
             return;
         }
         round = false;
@@ -92,9 +124,11 @@ public class MainFormController {
         pencil = false;
         eraser = true;
         text = false;
+        System.out.println("eraser");
 
-        image = new Image(this.getClass().getResource("/MainIcons/eraser (1).png").toString(),20,20,true,true);
+        image = new Image(Objects.requireNonNull(this.getClass().getResource("/MainIcons/eraser (1).png")).toString(),20,20,true,true);
         cnvMain.setCursor(new ImageCursor(image));
+
 
     }
 
@@ -106,6 +140,10 @@ public class MainFormController {
         pencil = false;
         eraser = false;
         text = false;
+
+        timeline.stop();
+        rectBlink.setVisible(false);
+
     }
 
     @FXML
@@ -116,6 +154,10 @@ public class MainFormController {
         pencil = true;
         eraser = false;
         text = false;
+
+        timeline.stop();
+        rectBlink.setVisible(false);
+
     }
 
     @FXML
@@ -126,6 +168,10 @@ public class MainFormController {
         pencil = false;
         eraser = false;
         text = false;
+
+        timeline.stop();
+        rectBlink.setVisible(false);
+
     }
 
     @FXML
@@ -136,11 +182,29 @@ public class MainFormController {
         pencil = false;
         eraser = false;
         text = false;
+
+        timeline.stop();
+        rectBlink.setVisible(false);
+
     }
 
     @FXML
     void btnTextOnAction(ActionEvent event) {
-        gp.fillText("hi its me", 20,20);
+        if(text){
+            text = false;
+            timeline.stop();
+            lblText.setText("");
+            textFromTyping = "";
+            rectBlink.setVisible(false);
+            return;
+        }
+        round = false;
+        rect = false;
+        oval = false;
+        pencil = false;
+        eraser = false;
+        text = true;
+
     }
 
     @FXML
@@ -292,6 +356,24 @@ public class MainFormController {
     public void cnvOnMousePressed(MouseEvent mouseEvent) {
         startPointX = mouseEvent.getX();
         startPointY = mouseEvent.getY();
+
+//        cnv = new Canvas(root.getWidth(), root.getHeight());
+//        gp = cnv.getGraphicsContext2D();
+
+        if (text){
+            gp.clearRect(0,0,root.getWidth(),root.getHeight());
+            textFromTyping = "";
+            lblText.setText("");
+
+            cnvMain.requestFocus();
+            lblText.setVisible(false);
+            rectBlink.setVisible(true);
+
+            rectBlink.setX(startPointX + 3);
+            rectBlink.setY(startPointY -10);
+
+            timeline.playFromStart();
+        }
 
     }
 
@@ -450,5 +532,54 @@ public class MainFormController {
         scaleTransition.setToX(1);
         scaleTransition.setToY(1);
         scaleTransition.play();
+    }
+
+    public void btnTextOnMousePressed(MouseEvent mouseEvent) {
+
+    }
+
+    public void lblTextOnKeyPressed(KeyEvent keyEvent) {
+    }
+
+    int i = 1;
+    public void cnvMainOnKeyPressed(KeyEvent keyEvent) {
+        if(text){
+            if (keyEvent.getCode() == KeyCode.ENTER) {
+                btnText.fire();
+            }
+            if (keyEvent.getCode().getCode() == 8) {
+                textFromTyping = textFromTyping.substring(0, textFromTyping.length() - 1);
+
+                gp.clearRect(0, 0, root.getWidth(), root.getHeight());
+
+                lblText.setText(textFromTyping);
+                gp.fillText(textFromTyping, startPointX, startPointY);
+
+                rectBlink.setX(startPointX + lblText.getWidth() - 4);
+                return;
+            }
+            textFromTyping = textFromTyping + keyEvent.getText();
+            System.out.println(keyEvent.getCode());
+            System.out.println(textFromTyping);
+
+            lblText.setText(textFromTyping);
+            gp.fillText(textFromTyping, startPointX, startPointY);
+
+            rectBlink.setX(startPointX + lblText.getWidth() + 4);
+        }
+
+
+//        KeyFrame key1 = new KeyFrame(Duration.seconds(0), event -> {
+//            rectBlink.setVisible(true);
+//        });
+//        KeyFrame key2 = new KeyFrame(Duration.seconds(0.75), event -> {
+//            rectBlink.setVisible(false);
+//        });
+//        KeyFrame key3 = new KeyFrame(Duration.seconds(1.5), event -> {
+//            rectBlink.setVisible(true);
+//        });
+//        Timeline timeline = new Timeline(key1,key2,key3);
+//        timeline.setCycleCount(Animation.INDEFINITE);
+//        timeline.playFromStart();
     }
 }
